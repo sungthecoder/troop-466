@@ -3,7 +3,7 @@ export interface HeroProps {
   lead: string;
 }
 export const Hero = ({ title, lead }: HeroProps) => (
-  <div className="relative min-h-screen w-full bg-[url('/assets/image/troop466-hero.png')] bg-cover bg-no-repeat">
+  <section className="relative min-h-screen w-full bg-[url('/assets/image/troop466-hero.png')] bg-cover bg-no-repeat">
     <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-troop466-900/60" />
     <div className="grid min-h-screen px-8">
       <div className="container relative z-10 my-auto mx-auto grid place-items-center text-center">
@@ -13,5 +13,5 @@ export const Hero = ({ title, lead }: HeroProps) => (
         </p>
       </div>
     </div>
-  </div>
-)
+  </section>
+);
