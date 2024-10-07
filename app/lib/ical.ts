@@ -1,18 +1,21 @@
 import ical from "ical.js";
 import invariant from "tiny-invariant";
 
-const validVEventFields = [
-  "uid",
-  "dtstamp",
-  "created",
-  "organizer",
-  "dtstart",
-  "dtend",
-  "summary",
-  "description",
-  "url",
-  "location",
-];
+const nullCalEvent = {
+  uid: "" as string,
+  dtstamp: "" as string,
+  created: "" as string,
+  organizer: "" as string,
+  dtstart: "" as string,
+  dtend: "" as string,
+  summary: "" as string,
+  description: "" as string,
+  url: "" as string,
+  location: "" as string,
+} as const;
+
+const validVEventFields = Object.keys(nullCalEvent);
+
 const validTypes = ["text", "date-time", "cal-address", "uri"];
 
 const validEventFieldSet = new Set(validVEventFields);
@@ -32,7 +35,7 @@ type Vevent = [
 
 type JCalEvents = ["vcalendar", [], Array<Vevent>];
 
-export type CalEvent = Record<(typeof validVEventFields)[number], string>;
+export type CalEvent = typeof nullCalEvent;
 
 export function parse(text: string) {
   const jcal: JCalEvents = ical.parse(text);
@@ -42,15 +45,18 @@ export function parse(text: string) {
   invariant(jcal[2], "invalid calendar object");
   return jcal[2].map(([name, fields]) => {
     invariant(name === "vevent", "must be vevent");
-    return fields.reduce<CalEvent>((eventObj, [field, _, fieldType, value]) => {
-      invariant(
-        validEventFieldSet.has(field),
-        `invalid event field: ${field}(${fieldType}): ${value}`
-      );
-      return {
-        ...eventObj,
-        [field]: value,
-      };
-    }, {});
+    return fields.reduce<CalEvent>(
+      (eventObj, [field, _, fieldType, value]) => {
+        invariant(
+          validEventFieldSet.has(field),
+          `invalid event field: ${field}(${fieldType}): ${value}`
+        );
+        return {
+          ...eventObj,
+          [field]: value,
+        };
+      },
+      { ...nullCalEvent }
+    );
   });
 }
