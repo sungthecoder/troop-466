@@ -24,7 +24,7 @@ export default function Index() {
     <div className="flex flex-col">
       <Hero
         title="Welcome to Troop 466"
-        lead="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec quis lectus ut nibh laoreet pretium. Aliquam condimentum eget leo vitae mattis. Nam facilisis sem ut neque dapibus ultricies. Curabitur vel auctor magna, id elementum erat. "
+        lead="Located in Davis, California, Troop 466 is a group of scouts from grades 5-12 committed to following the scout oath and law. Troop meetings are on Mondays from 7-8:30 at St. Martin's Church, and campouts are monthly."
       />
       <section className="py-12 bg-fixed bg-center bg-no-repeat bg-[url('/assets/image/topographic-map-background.jpg')]">
         <UpcomingEvents events={events} />
