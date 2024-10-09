@@ -1,9 +1,17 @@
 import { useEffect, useRef, useState } from "react";
-import { CalEvent } from "~/lib/ical";
 import { DEFAULT_FLAIR, findFlair } from "~/lib/find-flair";
+import type { UpcomingEvent } from "~/lib/upcoming-events";
 
-export const EventCard = ({ event }: { event: CalEvent }) => {
-  const { organizer, summary, description, location, dtstart, url } = event;
+export const EventCard = ({ event }: { event: UpcomingEvent }) => {
+  const {
+    organizer,
+    summary,
+    description,
+    descriptionHtml,
+    location,
+    dtstart,
+    url,
+  } = event;
   const startsAt = new Date(dtstart).toLocaleString("en-US", {
     timeZone: "America/Los_Angeles",
     dateStyle: "full",
@@ -11,7 +19,7 @@ export const EventCard = ({ event }: { event: CalEvent }) => {
   });
   const flairRef = useRef<HTMLImageElement>(null);
   const [flairSrc, setFlairSrc] = useState(
-    findFlair(`${summary} $description} ${location}`)
+    findFlair(`${summary} ${description} ${location}`)
   );
 
   return (
@@ -35,7 +43,7 @@ export const EventCard = ({ event }: { event: CalEvent }) => {
           <div className="text-sm">
             <p
               className="inline placeholder-opacity-100"
-              dangerouslySetInnerHTML={{ __html: description }}
+              dangerouslySetInnerHTML={{ __html: descriptionHtml }}
             />{" "}
             <span className="text-nowrap">
               (
