@@ -9,14 +9,12 @@ export const UpcomingEvents = ({ events }: { events: UpcomingEvent[] }) => (
       </h2>
       <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
     </div>
-    <div className="container px-6 m-auto">
-      <div className="grid grid-cols-4 gap-6 md:grid-cols-8 lg:grid-cols-12">
-        {events.map((e) => (
-          <div key={e.uid} className="col-span-4 lg:col-span-6 md:col-span-8">
-            <EventCard event={e} />
-          </div>
-        ))}
-      </div>
+    <div className="mb-10 flex flex-row flex-wrap -m-2">
+      {events.map((e) => (
+        <div key={e.uid} className="items-stretch w-full lg:w-1/2 xl:w-1/3 p-2">
+          <EventCard event={e} />
+        </div>
+      ))}
     </div>
   </div>
 );

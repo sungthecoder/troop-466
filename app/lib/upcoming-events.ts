@@ -1,7 +1,7 @@
 import linkifyStr from "linkify-string";
 import { CalEvent } from "./ical";
 
-export const upcomingEvents = (events: CalEvent[], count = 4) => {
+export const upcomingEvents = (events: CalEvent[], count = 6) => {
   const now = new Date().getTime();
 
   return events
