@@ -41,7 +41,10 @@ export const EventCard = ({ event }: { event: UpcomingEvent }) => {
           <h2 className="card-title overflow-hidden whitespace-normal text-ellipsis line-clamp-1">
             {summary}
           </h2>
-          <p dangerouslySetInnerHTML={{ __html: descriptionHtml }} />
+          <p
+            className="line-clamp-3"
+            dangerouslySetInnerHTML={{ __html: descriptionHtml }}
+          />
           <div className="card-actions justify-end">
             <a
               href={url}
