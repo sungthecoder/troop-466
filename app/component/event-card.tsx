@@ -38,11 +38,11 @@ export const EventCard = ({ event }: { event: UpcomingEvent }) => {
           <div className="mt-2 text-xl text-gray-900 font-bold">{startDay}</div>
         </div>
         <div className="card-body">
-          <h2 className="card-title overflow-hidden whitespace-normal text-ellipsis line-clamp-1">
+          <h2 className="card-title overflow-hidden whitespace-normal text-ellipsis line-clamp-1 break-all">
             {summary}
           </h2>
           <p
-            className="line-clamp-3"
+            className="line-clamp-3 break-all"
             dangerouslySetInnerHTML={{ __html: descriptionHtml }}
           />
           <div className="card-actions justify-end">
@@ -58,38 +58,5 @@ export const EventCard = ({ event }: { event: UpcomingEvent }) => {
         </div>
       </div>
     </div>
-    // <div className="overflow-hidden rounded bg-white text-slate-500 shadow-md shadow-slate-200">
-    //   {/*  <!-- Image --> */}
-    //   <figure className="relative">
-    //     <img
-    //       ref={flairRef}
-    //       src={flairSrc}
-    //       alt="flair image"
-    //       className="object-cover"
-    //       onError={() => setFlairSrc(DEFAULT_FLAIR)}
-    //     />
-    //     <figcaption className="flex flex-col gap-4 absolute bottom-0 left-0 w-full bg-gradient-to-t from-slate-900 p-6 text-white">
-    //       <div>
-    //         <h3 className="text-lg font-semibold">{summary}</h3>
-    //         <p className="text-sm opacity-75">
-    //           By {organizer} on {startsAt}
-    //         </p>
-    //       </div>
-    //       <div className="text-sm">
-    //         <p
-    //           className="inline placeholder-opacity-100"
-    //           dangerouslySetInnerHTML={{ __html: descriptionHtml }}
-    //         />{" "}
-    //         <span className="text-nowrap">
-    //           (
-    //           <a href={url} target="_blank">
-    //             detail in scoutbook
-    //           </a>
-    //           )
-    //         </span>
-    //       </div>
-    //     </figcaption>
-    //   </figure>
-    // </div>
   );
 };
