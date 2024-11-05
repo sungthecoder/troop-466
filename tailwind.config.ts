@@ -1,3 +1,4 @@
+import typography from "@tailwindcss/typography";
 import type { Config } from "tailwindcss";
 import daisyui from "daisyui";
 
@@ -22,12 +23,15 @@ export default {
       },
     },
   },
-  plugins: [daisyui],
+  plugins: [typography, daisyui],
   daisyui: {
     themes: [
       {
         troop466: {
           primary: "#ff3b26",
+          ".btn-primary": {
+            text: "white",
+          },
         },
       },
     ],

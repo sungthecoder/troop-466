@@ -58,7 +58,7 @@ export const EventCard = ({ event }: { event: UpcomingEvent }) => {
               href={url}
               target="_blank"
               rel="noreferrer noopener"
-              className="btn btn-primary"
+              className="btn btn-primary text-white visited:text-white visited:hover:text-gray-900"
             >
               RSVP
             </a>
