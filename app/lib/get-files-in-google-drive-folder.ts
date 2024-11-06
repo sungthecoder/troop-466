@@ -1,12 +1,11 @@
 import { drive_v3, google } from "googleapis";
 import { JWT } from "google-auth-library";
-import dotenv from "dotenv";
+import { env } from "node:process";
 
 export const isFolder = (mimeType?: string | null) =>
   mimeType?.endsWith("folder");
 
-dotenv.config();
-const CREDENTIALS = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_KEY || "");
+const CREDENTIALS = JSON.parse(env.GOOGLE_SERVICE_ACCOUNT_KEY || "");
 const SCOPES = ["https://www.googleapis.com/auth/drive.readonly"];
 const gdrive = google.drive({ version: "v3" });
 

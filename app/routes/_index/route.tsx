@@ -9,7 +9,7 @@ import { UpcomingEvents } from "./upcoming-events";
 import { type DeviceType, LatestActivities } from "./latest-activities";
 import { upcomingEvents } from "~/lib/upcoming-events";
 import { fetchCalendar } from "~/lib/fetch-calendar";
-import { getAllFiles } from "~/lib/get-files-in-google-drive-folder.server";
+import { getAllFiles } from "~/lib/get-files-in-google-drive-folder";
 import MobileDetect from "mobile-detect";
 
 export const meta: MetaFunction = () => {
