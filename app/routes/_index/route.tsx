@@ -63,9 +63,9 @@ export default function Index() {
         </div>
       </section>
       <section className="py-12 bg-troop466-200">
-        <div className="h-20">FAQ
+        <div className="h-60">FAQ
           <div className="collapse collapse-plus bg-base-200">
-            <input type="radio" name="my-accordion-3" checked/>
+            <input type="radio" name="my-accordion-3" defaultChecked/>
             <div className="collapse-title text-xl font-medium">Click to open this one and close others</div>
             <div className="collapse-content">
               <p>hello</p>
