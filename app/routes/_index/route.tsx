@@ -14,7 +14,7 @@ import MobileDetect from "mobile-detect";
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "New Remix App" },
+    { title: "Davis Troop 466" },
     { name: "description", content: "Welcome to Remix!" },
   ];
 };
