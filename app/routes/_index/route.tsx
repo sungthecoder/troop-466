@@ -4,12 +4,14 @@ import type {
   MetaFunction,
 } from "@netlify/remix-runtime";
 import { useLoaderData } from "@remix-run/react";
+import { ContactUs } from "./contact-us";
 import { Hero } from "./hero";
 import { UpcomingEvents } from "./upcoming-events";
 import { type DeviceType, LatestActivities } from "./latest-activities";
 import { upcomingEvents } from "~/lib/upcoming-events";
 import { fetchCalendar } from "~/lib/fetch-calendar";
 import { getAllFiles } from "~/lib/get-files-in-google-drive-folder";
+import { getContact } from "~/lib/get-contact";
 import MobileDetect from "mobile-detect";
 
 export const meta: MetaFunction = () => {
@@ -35,17 +37,20 @@ const guessDeviceType = (userAgent: string | null): DeviceType => {
 export const loader: LoaderFunction = async ({
   request,
 }: LoaderFunctionArgs) => {
-  const allEvents = await fetchCalendar();
+  const [allEvents, allFiles, contact] = await Promise.all([
+    fetchCalendar(),
+    getAllFiles(PHOTO_FOLDER_ID, { thumbnailSize: 400 }),
+    getContact(),
+  ]);
   const events = upcomingEvents(allEvents);
-  const allFiles = await getAllFiles(PHOTO_FOLDER_ID, { thumbnailSize: 400 });
   const userAgent = request.headers.get("user-agent");
   const deviceType = guessDeviceType(userAgent);
   const { files } = allFiles;
-  return { events, files, deviceType };
+  return { contact, events, files, deviceType };
 };
 
 export default function Index() {
-  const { events, files, deviceType } = useLoaderData<typeof loader>();
+  const { contact, events, files, deviceType } = useLoaderData<typeof loader>();
   return (
     <div className="flex flex-col">
       <section>
@@ -65,8 +70,8 @@ export default function Index() {
       <section className="py-12 bg-troop466-200">
         <div className="h-20">FAQ</div>
       </section>
-      <section className="py-12">
-        <div className="h-20">Contact us</div>
+      <section className="py-12 bg-fixed bg-center bg-no-repeat bg-[url('/assets/image/topographic-map-background.jpg')]">
+        <ContactUs {...contact} />
       </section>
       <footer className="footer bg-neutral text-neutral-content p-10"></footer>
       {/**
