@@ -1,12 +1,5 @@
-import fs from "node:fs/promises";
-import { fileURLToPath } from "node:url";
-import { dirname } from "node:path";
-import yaml from "js-yaml";
-import path from "path";
 import invariant from "tiny-invariant";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+import doc from "~/../contents/contact.yml";
 
 export interface ContactUsProps {
   email: string;
@@ -14,8 +7,6 @@ export interface ContactUsProps {
   address: string;
   website: string;
 }
-
-const contactPath = path.join(__dirname, "../..", "/contents/contact.yml");
 
 const isValid = (attributes: any): attributes is ContactUsProps => {
   return (
@@ -27,8 +18,6 @@ const isValid = (attributes: any): attributes is ContactUsProps => {
 };
 
 export async function getContact() {
-  const file = await fs.readFile(contactPath);
-  const doc = yaml.load(file.toString()) as ContactUsProps;
   invariant(isValid(doc), "contact yml has bad metadata");
   return doc;
 }
