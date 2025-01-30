@@ -12,6 +12,7 @@ import { fetchCalendar } from "~/lib/fetch-calendar";
 import { getAllFiles } from "~/lib/get-files-in-google-drive-folder";
 import MobileDetect from "mobile-detect";
 import { FAQ } from "./faq";
+import { faqs } from "~/lib/fetch-faqs";
 
 export const meta: MetaFunction = () => {
   return [
@@ -63,7 +64,7 @@ export default function Index() {
           <UpcomingEvents events={events} />
         </div>
       </section>
-      <FAQ />
+      <FAQ faqs={faqs} />
       <section className="py-12">
         <div className="h-20">Contact us</div>
       </section>
