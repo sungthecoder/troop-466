@@ -47,7 +47,7 @@ export const loader: LoaderFunction = async ({
 export default function Index() {
   const { events, files, deviceType } = useLoaderData<typeof loader>();
   return (
-    <div className="flex flex-col">
+    <nav className="flex flex-col">
       <section>
         <div className="navbar bg-base-100">
           <div className="navbar-start">
@@ -115,6 +115,6 @@ export default function Index() {
        *  * Link to google drive
        *  * Link to scoutbook
        */}
-    </div>
+    </nav>
   );
 }
