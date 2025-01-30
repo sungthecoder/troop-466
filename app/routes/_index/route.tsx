@@ -49,7 +49,7 @@ export default function Index() {
   return (
     <nav className="absolute top-0 w-full">
       <section>
-        <div className="navbar bg-base-100">
+        <div className="navbar">
           <div className="navbar-start">
             <div className="dropdown">
               <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
