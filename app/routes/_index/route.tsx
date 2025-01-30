@@ -76,7 +76,7 @@ export default function Index() {
             </div>
           </div>
           <div className="navbar-end">
-            <a className="btn btn-ghost text-xl">Troop 466</a>
+            <a className="btn btn-ghost text-xl" href="/">Troop 466</a>
           </div>
         </div>
       </section>
