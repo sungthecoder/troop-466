@@ -13,6 +13,8 @@ import { fetchCalendar } from "~/lib/fetch-calendar";
 import { getAllFiles } from "~/lib/get-files-in-google-drive-folder";
 import { getContact } from "~/lib/get-contact";
 import MobileDetect from "mobile-detect";
+import { FAQ } from "./faq";
+import { faqs } from "~/lib/fetch-faqs";
 
 export const meta: MetaFunction = () => {
   return [
