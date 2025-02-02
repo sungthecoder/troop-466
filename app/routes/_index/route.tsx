@@ -9,6 +9,7 @@ import { ContactUs } from "./contact-us";
 import { Hero } from "./hero";
 import { UpcomingEvents } from "./upcoming-events";
 import { type DeviceType, LatestActivities } from "./latest-activities";
+import { Footer } from "~/component/footer";
 import { upcomingEvents } from "~/lib/upcoming-events";
 import { fetchCalendar } from "~/lib/fetch-calendar";
 import { getAllFiles } from "~/lib/get-files-in-google-drive-folder";
@@ -127,7 +128,7 @@ export default function Index() {
       <section className="py-12 bg-fixed bg-center bg-no-repeat bg-[url('/assets/image/topographic-map-background.jpg')]">
         <ContactUs {...contact} />
       </section>
-      <footer className="footer bg-neutral text-neutral-content p-10"></footer>
+      <Footer />
       {/**
        * TODO About us page:
        *  * About us: where we meet, when we meet
