@@ -122,10 +122,16 @@ export default function Index() {
           <UpcomingEvents events={events} />
         </div>
       </section>
-      <section className="py-12 bg-fixed bg-center bg-no-repeat bg-[url('/assets/image/background-red-grunge.jpg')]">
+      <section
+        id="cta"
+        className="py-12 bg-fixed bg-center bg-no-repeat bg-[url('/assets/image/background-red-grunge.jpg')]"
+      >
         <CallToAction {...cta} />
       </section>
-      <section className="py-12 bg-fixed bg-center bg-no-repeat bg-[url('/assets/image/topographic-map-background.jpg')]">
+      <section
+        id="contact"
+        className="py-12 bg-fixed bg-center bg-no-repeat bg-[url('/assets/image/topographic-map-background.jpg')]"
+      >
         <ContactUs {...contact} />
       </section>
       <Footer />
