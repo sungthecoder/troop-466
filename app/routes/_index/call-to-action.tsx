@@ -1,9 +1,8 @@
-import ReactMarkDown from "react-markdown";
 import { CallToActionProps } from "~/lib/get-call-to-action";
 
 export const CallToAction = ({
   heading,
-  message,
+  messageHtml,
   url,
   faqs,
 }: CallToActionProps) => {
@@ -14,7 +13,10 @@ export const CallToAction = ({
           <h2 className="text-white uppercase font-serif text-2xl">
             {heading}
           </h2>
-          <ReactMarkDown className="text-white prose">{message}</ReactMarkDown>
+          <div
+            className="text-white prose"
+            dangerouslySetInnerHTML={{ __html: messageHtml }}
+          />
           <a
             href={url}
             target="_blank"
