@@ -80,9 +80,9 @@ export const ContactUs = ({
                 <button
                   type="submit"
                   id="form-submit"
-                  className="btn btn-primary text-white font-serif"
+                  className="btn uppercase btn-primary text-white"
                 >
-                  SEND MESSAGE NOW
+                  Send Message NoW
                 </button>
               </fieldset>
             </div>
