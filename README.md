@@ -72,3 +72,4 @@ netlify deploy --build --prod
 Image by freepick Requires attributions:
 
 - https://www.freepik.com/free-vector/topographic-map-background_8967820.htm#from_view=detail_alsolike
+- Image by kjpargeter on Freepik https://www.freepik.com/free-vector/red-grunge-background_1808442.htm

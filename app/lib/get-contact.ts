@@ -17,7 +17,7 @@ const isValid = (attributes: any): attributes is ContactUsProps => {
   );
 };
 
-export async function getContact() {
+export function getContact() {
   invariant(isValid(doc), "contact yml has bad metadata");
   return doc;
 }
