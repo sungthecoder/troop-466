@@ -1,3 +1,4 @@
+import showdown from "showdown";
 import invariant from "tiny-invariant";
 import doc from "~/../contents/cta.yml";
 
@@ -6,14 +7,14 @@ export type FAQItem = {
   answer: string;
 };
 
-export interface CallToActionProps {
+export interface CallToAction {
   heading: string;
   message: string;
   url: string;
   faqs: Array<FAQItem>;
 }
 
-const isValid = (attributes: any): attributes is CallToActionProps => {
+const isValid = (attributes: any): attributes is CallToAction => {
   return (
     attributes?.heading &&
     attributes?.message &&
@@ -24,5 +25,12 @@ const isValid = (attributes: any): attributes is CallToActionProps => {
 
 export function getCallToAction() {
   invariant(isValid(doc), "call to action yml has bad metadata");
-  return doc;
+  const converter = new showdown.Converter();
+  const { message } = doc;
+  return {
+    ...doc,
+    messageHtml: converter.makeHtml(message),
+  };
 }
+
+export type CallToActionProps = ReturnType<typeof getCallToAction>;
