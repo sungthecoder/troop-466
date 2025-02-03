@@ -1,6 +1,6 @@
 ---
 layout: page
-date: 2023-10-21T06:01:24.003Z
+date: 2025-02-02T06:01:24.003Z
 title: Privacy Policy
 ---
 
