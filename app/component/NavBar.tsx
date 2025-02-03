@@ -18,7 +18,9 @@ export const NavBar = () => (
               <Link to="/">Homepage</Link>
             </li>
             <li>
-              <a>Portfolio</a>
+              <Link to="/how-to-make-payments">
+                How to make payments to Troop 466
+              </Link>
             </li>
             <li>
               <a>About</a>

@@ -6,13 +6,16 @@ import { useLoaderData } from "@remix-run/react";
 import { Footer } from "~/component/footer";
 import { NavBar } from "~/component/NavBar";
 import { PageBody } from "~/component/page-body";
+import { getGoogleDocPage } from "~/lib/get-google-doc-page";
 import { getMarkdownPage } from "~/lib/get-md-page";
 
 export const loader: LoaderFunction = async ({
   params,
 }: LoaderFunctionArgs) => {
   const pageName = params.slug || "";
-  const page = await getMarkdownPage(pageName);
+  const gdPage = await getGoogleDocPage(pageName);
+  const page = gdPage || (await getMarkdownPage(pageName));
+
   return { page };
 };
 

@@ -1,11 +1,13 @@
 import { type MarkdownPage } from "~/lib/get-md-page";
 
 export const PageBody = ({ title, date, html }: MarkdownPage) => {
-  const publishedAt = new Date(date).toLocaleString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+  const publishedAt = date
+    ? new Date(date).toLocaleString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+    : null;
 
   return (
     <>
