@@ -6,10 +6,15 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
+import { config as fontAwesomeConfig } from "@fortawesome/fontawesome-svg-core";
+import fontAwesomeStyles from "@fortawesome/fontawesome-svg-core/styles.css";
 import stylesheet from "~/tailwind.css?url";
+
+fontAwesomeConfig.autoAddCss = false;
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
+  { rel: "stylesheet", href: fontAwesomeStyles },
 ];
 
 export default function App() {
