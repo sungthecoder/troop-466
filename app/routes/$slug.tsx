@@ -4,7 +4,7 @@ import type {
 } from "@netlify/remix-runtime";
 import { useLoaderData } from "@remix-run/react";
 import { Footer } from "~/component/footer";
-import { NavBar } from "~/component/NavBar";
+import { NavBar } from "~/component/nav-bar";
 import { PageBody } from "~/component/page-body";
 import { getGoogleDocPage } from "~/lib/get-google-doc-page";
 import { getMarkdownPage } from "~/lib/get-md-page";

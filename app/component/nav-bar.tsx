@@ -8,7 +8,7 @@ export const NavBar = () => (
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
-            <FontAwesomeIcon icon={faBars} />
+            <FontAwesomeIcon icon={faBars} size="lg" />
           </div>
           <ul
             tabIndex={0}
@@ -29,7 +29,10 @@ export const NavBar = () => (
         </div>
       </div>
       <div className="navbar-end">
-        <Link className="btn btn-ghost text-xl visited:text-slate-50" to="/">
+        <Link
+          className="btn btn-ghost text-xl visited:text-slate-50 font-serif"
+          to="/"
+        >
           Troop 466
         </Link>
       </div>
