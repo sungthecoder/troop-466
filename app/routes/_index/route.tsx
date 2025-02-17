@@ -16,7 +16,7 @@ import { getAllFiles } from "~/lib/get-files-in-google-drive-folder";
 import { getContact } from "~/lib/get-contact";
 import { getCallToAction } from "~/lib/get-call-to-action";
 import MobileDetect from "mobile-detect";
-import { NavBar } from "~/component/NavBar";
+import { NavBar } from "~/component/nav-bar";
 
 export const meta: MetaFunction = () => {
   return [

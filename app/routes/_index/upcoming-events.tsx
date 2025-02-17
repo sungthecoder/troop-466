@@ -4,7 +4,7 @@ import type { UpcomingEvent } from "~/lib/upcoming-events";
 export const UpcomingEvents = ({ events }: { events: UpcomingEvent[] }) => (
   <div className="flex flex-col container mx-auto">
     <div>
-      <h2 className="font-bold text-nowrap text-center text-troop466-950 text-3xl">
+      <h2 className="font-bold text-nowrap text-center text-troop466-950 text-3xl font-serif">
         Upcoming Events
       </h2>
       <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />

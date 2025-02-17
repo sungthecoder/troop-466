@@ -22,6 +22,10 @@ export default {
         },
       },
     },
+    fontFamily: {
+      serif: ['"Roboto Slab"', "serif"],
+      sans: ['"Roboto"', "sans-serif"],
+    },
   },
   plugins: [typography, daisyui],
   daisyui: {
@@ -31,6 +35,7 @@ export default {
           primary: "#ff3b26",
           ".btn-primary": {
             text: "white",
+            fontFamily: "Roboto Slab, serif",
           },
         },
       },
