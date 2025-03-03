@@ -7,12 +7,12 @@ export const isFolder = (mimeType?: string | null) =>
   mimeType?.endsWith("folder");
 
 const CREDENTIALS = JSON.parse(env.GOOGLE_SERVICE_ACCOUNT_KEY || "");
-const SCOPES = ["https://www.googleapis.com/auth/drive.readonly"];
-const gdrive = google.drive({ version: "v3" });
-
 const clientEmail = CREDENTIALS.client_email;
 const privateKey = CREDENTIALS.private_key.split(String.raw`\n`).join("\n");
+const SCOPES = ["https://www.googleapis.com/auth/drive.readonly"];
 const auth = new google.auth.JWT(clientEmail, undefined, privateKey, SCOPES);
+const gdrive = google.drive({ version: "v3", auth });
+
 const fileFields = [
   "id",
   "name",
@@ -50,12 +50,16 @@ export async function fetchThumbnail(
 
 export const getAllFiles = async (
   folderId: string,
+  driveId: string,
   option: { pageToken?: string | null; thumbnailSize?: number } = {}
 ) => {
   try {
     const response = await gdrive.files.list({
-      auth,
-      q: `'${folderId}' in parents`,
+      q: `'${folderId}' in parents and trashed=false`,
+      driveId,
+      includeItemsFromAllDrives: true,
+      supportsAllDrives: true,
+      corpora: "drive",
       fields: `nextPageToken, files(${fileFields.join(",")})`,
       pageToken: option?.pageToken || undefined,
     });

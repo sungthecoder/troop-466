@@ -22,7 +22,7 @@ export const NavBar = ({ menu }: NavBarProps) => (
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
           >
             {menu.map(({ to, label }) => (
-              <li>
+              <li key={to}>
                 <Link to={to}>{label}</Link>
               </li>
             ))}
