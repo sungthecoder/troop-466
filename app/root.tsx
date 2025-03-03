@@ -7,14 +7,14 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 import { config as fontAwesomeConfig } from "@fortawesome/fontawesome-svg-core";
-import fontAwesomeStyles from "@fortawesome/fontawesome-svg-core/styles.css";
-import stylesheet from "~/tailwind.css?url";
+import tailwindStyles from "~/tailwind.css?url";
+import rootStyles from "~/styles.scss?url";
 
 fontAwesomeConfig.autoAddCss = false;
 
 export const links: LinksFunction = () => [
-  { rel: "stylesheet", href: stylesheet },
-  { rel: "stylesheet", href: fontAwesomeStyles },
+  { rel: "stylesheet", href: tailwindStyles },
+  { rel: "stylesheet", href: rootStyles },
 ];
 
 export default function App() {

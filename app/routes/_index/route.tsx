@@ -14,7 +14,9 @@ import { upcomingEvents } from "~/lib/upcoming-events";
 import { fetchCalendar } from "~/lib/fetch-calendar";
 import { getAllFiles } from "~/lib/get-files-in-google-drive-folder";
 import { getContact } from "~/lib/get-contact";
+import { getHero } from "~/lib/get-hero";
 import { getCallToAction } from "~/lib/get-call-to-action";
+import { getMenu } from "~/lib/get-menu";
 import MobileDetect from "mobile-detect";
 import { NavBar } from "~/component/nav-bar";
 
@@ -48,26 +50,25 @@ export const loader: LoaderFunction = async ({
     fetchCalendar(),
     getAllFiles(PHOTO_FOLDER_ID, { thumbnailSize: 400 }),
   ]);
+  const menu = getMenu();
+  const hero = getHero();
   const events = upcomingEvents(allEvents);
   const userAgent = request.headers.get("user-agent");
   const deviceType = guessDeviceType(userAgent);
   const contact = getContact();
   const cta = getCallToAction();
   const { files } = allFiles;
-  return { contact, cta, events, files, deviceType };
+  return { contact, cta, events, files, hero, deviceType, menu };
 };
 
 export default function Index() {
-  const { contact, cta, events, files, deviceType } =
+  const { contact, cta, events, files, hero, deviceType, menu } =
     useLoaderData<typeof loader>();
   return (
     <>
-      <NavBar />
+      <NavBar menu={menu} />
       <section>
-        <Hero
-          title="Welcome to Troop 466"
-          lead="Located in Davis, California, Troop 466 is a group of scouts from grades 5-12 committed to following the scout oath and law. Troop meetings are on Mondays from 7-8:30 at St. Martin's Church, and campouts are monthly."
-        />
+        <Hero {...hero} />
       </section>
       <section>
         <LatestActivities files={files} deviceType={deviceType} />

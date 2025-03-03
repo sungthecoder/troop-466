@@ -25,9 +25,12 @@ interface GoogleDocMeta {
   id: string;
   title: string;
   slug: string;
+  category?: string;
 }
 
-const isValid = (attributes: any): attributes is { docs: GoogleDocMeta[] } => {
+export const isValid = (
+  attributes: any
+): attributes is { docs: GoogleDocMeta[] } => {
   return (
     attributes?.docs &&
     Array.isArray(attributes.docs) &&
