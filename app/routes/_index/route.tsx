@@ -30,7 +30,8 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-const PHOTO_FOLDER_ID = "1CXo77MonNVRWyaPk0TwrCqwYB_S2IVj9";
+const PHOTO_FOLDER_ID = "1RfFAPsLsYwwnx_V8rk0_c-kI2RHsh_-J";
+const SHARED_DRIVE_ID = "0AALVk27yCS_iUk9PVA";
 
 const guessDeviceType = (userAgent: string | null): DeviceType => {
   const md = new MobileDetect(userAgent || "");
@@ -48,7 +49,7 @@ export const loader: LoaderFunction = async ({
 }: LoaderFunctionArgs) => {
   const [allEvents, allFiles] = await Promise.all([
     fetchCalendar(),
-    getAllFiles(PHOTO_FOLDER_ID, { thumbnailSize: 400 }),
+    getAllFiles(PHOTO_FOLDER_ID, SHARED_DRIVE_ID, { thumbnailSize: 400 }),
   ]);
   const menu = getMenu();
   const hero = getHero();
