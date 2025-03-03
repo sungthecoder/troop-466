@@ -1,24 +1,35 @@
 import invariant from "tiny-invariant";
 import showdown from "showdown";
-import { google } from "googleapis";
+import { docs_v1, google } from "googleapis";
 import { env } from "node:process";
 import doc from "~/../contents/google-docs.yml";
 
 const CREDENTIALS = JSON.parse(env.GOOGLE_SERVICE_ACCOUNT_KEY || "");
-const SCOPES = ["https://www.googleapis.com/auth/drive"];
-const gdrive = google.drive({ version: "v3" });
-
+const SCOPES = [
+  "https://www.googleapis.com/auth/drive",
+  "https://www.googleapis.com/auth/documents.readonly",
+];
 const clientEmail = CREDENTIALS.client_email;
 const privateKey = CREDENTIALS.private_key.split(String.raw`\n`).join("\n");
 const auth = new google.auth.JWT(clientEmail, undefined, privateKey, SCOPES);
 
-const getGoogldDoc = async (id: string): Promise<string> => {
-  const { data } = await gdrive.files.export({
+const gdrive = google.drive({ version: "v3" });
+const gdoc = google.docs({ version: "v1", auth });
+
+const getGoogldDoc = async (
+  id: string
+): Promise<{ markdown: string; document: docs_v1.Schema$Document }> => {
+  const { data: markdown } = await gdrive.files.export({
     fileId: id,
     auth,
     mimeType: "text/markdown",
   });
-  return data as Promise<string>;
+
+  const { data: document } = await gdoc.documents.get({ documentId: id });
+  return { markdown, document } as {
+    markdown: string;
+    document: docs_v1.Schema$Document;
+  };
 };
 
 interface GoogleDocMeta {
@@ -52,12 +63,16 @@ export async function getGoogleDocPage(slug: string) {
   if (!googleDocMeta) {
     return null;
   }
-  const { id, title } = googleDocMeta;
+  const { id } = googleDocMeta;
   try {
     const converter = new showdown.Converter();
-    const markdown = await getGoogldDoc(id);
+    const { markdown, document } = await getGoogldDoc(id);
 
-    return { title, html: converter.makeHtml(markdown), date: null };
+    return {
+      title: document.title,
+      html: converter.makeHtml(markdown),
+      date: null,
+    };
   } catch (error) {
     console.log({ error });
     throw new Response(null, {
