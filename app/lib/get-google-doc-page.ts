@@ -64,9 +64,13 @@ export async function getGoogleDocPage(slug: string) {
     return null;
   }
   const { id } = googleDocMeta;
+  return getGoogleDocConttent(id);
+}
+
+export async function getGoogleDocConttent(fileId: string) {
   try {
     const converter = new showdown.Converter();
-    const { markdown, document } = await getGoogldDoc(id);
+    const { markdown, document } = await getGoogldDoc(fileId);
 
     return {
       title: document.title,

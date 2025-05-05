@@ -53,5 +53,5 @@ export const findFlair = (text: string) => {
     return DEFAULT_FLAIR;
   }
 
-  return `https://ssl.gstatic.com/tmly/f8944938hffheth4ew890ht4i8/flairs/xxhdpi/img_${flairName}.jpg`;
+  return `https://ssl.gstatic.com/tmly/f8944938hffheth4ew890ht4i8/flairs/xxhdpi/img_${flairName.trim()}.jpg`;
 };

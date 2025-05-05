@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { DEFAULT_FLAIR, findFlair } from "~/lib/find-flair";
 import type { UpcomingEvent } from "~/lib/upcoming-events";
 

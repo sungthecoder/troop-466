@@ -14,6 +14,7 @@ const auth = new google.auth.JWT(clientEmail, undefined, privateKey, SCOPES);
 const gdrive = google.drive({ version: "v3", auth });
 
 const fileFields = [
+  "kind",
   "id",
   "name",
   "parents",
@@ -24,6 +25,8 @@ const fileFields = [
   "iconLink",
   "hasThumbnail",
   "thumbnailLink",
+  "createdTime",
+  "exportLinks",
 ];
 
 export async function fetchThumbnail(
@@ -51,7 +54,11 @@ export async function fetchThumbnail(
 export const getAllFiles = async (
   folderId: string,
   driveId: string,
-  option: { pageToken?: string | null; thumbnailSize?: number } = {}
+  option: {
+    pageToken?: string | null;
+    thumbnailSize?: number;
+    orderBy?: string;
+  } = {}
 ) => {
   try {
     const response = await gdrive.files.list({
@@ -62,6 +69,7 @@ export const getAllFiles = async (
       corpora: "drive",
       fields: `nextPageToken, files(${fileFields.join(",")})`,
       pageToken: option?.pageToken || undefined,
+      orderBy: option?.orderBy || undefined,
     });
 
     const folders = (response.data.files || [])
