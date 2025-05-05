@@ -5,9 +5,7 @@ interface HeroProp extends HeroContent {
 }
 
 export const Hero = ({ greeting, html }: HeroProp) => (
-  <div
-    className={`hero min-h-screen bg-[url('/assets/image/troop466-hero.png')]`}
-  >
+  <div className="hero min-h-screen bg-[url('/assets/image/troop466-hero.png')]">
     <div className="hero-overlay bg-opacity-60 bg-gradient-to-b from-troop466-900/60"></div>
     <div className="hero-content text-neutral-content text-center">
       <div className="max-w-lg text-troop466-50">

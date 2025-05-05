@@ -10,6 +10,7 @@ import { Hero } from "./hero";
 import { UpcomingEvents } from "./upcoming-events";
 import { type DeviceType, LatestActivities } from "./latest-activities";
 import { Footer } from "~/component/footer";
+import { PHOTO_FOLDER_ID, SHARED_DRIVE_ID } from "~/lib/constants";
 import { upcomingEvents } from "~/lib/upcoming-events";
 import { fetchCalendar } from "~/lib/fetch-calendar";
 import { getAllFiles } from "~/lib/get-files-in-google-drive-folder";
@@ -29,9 +30,6 @@ export const meta: MetaFunction = () => {
     },
   ];
 };
-
-const PHOTO_FOLDER_ID = "1RfFAPsLsYwwnx_V8rk0_c-kI2RHsh_-J";
-const SHARED_DRIVE_ID = "0AALVk27yCS_iUk9PVA";
 
 const guessDeviceType = (userAgent: string | null): DeviceType => {
   const md = new MobileDetect(userAgent || "");

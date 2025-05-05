@@ -9,6 +9,10 @@ export const getMenu = () => {
       label: "Home page",
       to: "/",
     },
+    {
+      label: "Eable scout projects",
+      to: "/eagle-projects",
+    },
     ...gDoc.docs.map(({ title, slug }) => ({
       label: title,
       to: `/${slug}`,
