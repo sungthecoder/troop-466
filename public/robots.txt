@@ -1,0 +1,4 @@
+# robots.txt configured for Google Search indexing
+User-agent: *
+Allow: /
+Sitemap: https://www.example.com/sitemap.xml
