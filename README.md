@@ -67,5 +67,10 @@ netlify deploy --build
 netlify deploy --build --prod
 ```
 
-## TODO
+Github repo:
+https://github.com/sungthecoder/troop-466
 
+Netlify project:
+https://app.netlify.com/projects/troop466/overview
+
+## TODO
