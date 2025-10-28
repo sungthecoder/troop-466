@@ -69,7 +69,10 @@ export async function getGoogleDocPage(slug: string) {
 
 export async function getGoogleDocConttent(fileId: string) {
   try {
-    const converter = new showdown.Converter();
+    const converter = new showdown.Converter({
+      tables: true,
+      disableForced4SpacesIndentedSublists: true,
+    });
     const { markdown, document } = await getGoogldDoc(fileId);
 
     return {
