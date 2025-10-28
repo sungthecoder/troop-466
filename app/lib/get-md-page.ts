@@ -22,7 +22,7 @@ export async function getMarkdownPage(pageName: string) {
       `../../contents/pages/${pageName}.md`
     );
     invariant(isValid(attributes), `${pageName}.md has bad meta data!`);
-    const converter = new showdown.Converter();
+    const converter = new showdown.Converter({ tables: true });
 
     return {
       ...attributes,
