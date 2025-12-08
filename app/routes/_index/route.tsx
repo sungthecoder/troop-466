@@ -4,6 +4,7 @@ import type {
   MetaFunction,
 } from "@netlify/remix-runtime";
 import { useLoaderData } from "@remix-run/react";
+import showdown from "showdown";
 import { CallToAction } from "./call-to-action";
 import { ContactUs } from "./contact-us";
 import { Hero } from "./hero";
@@ -45,6 +46,7 @@ const guessDeviceType = (userAgent: string | null): DeviceType => {
 export const loader: LoaderFunction = async ({
   request,
 }: LoaderFunctionArgs) => {
+  const converter = new showdown.Converter();
   const [allEvents, allFiles] = await Promise.all([
     fetchCalendar(),
     getAllFiles(PHOTO_FOLDER_ID, SHARED_DRIVE_ID, { thumbnailSize: 400 }),
@@ -57,11 +59,26 @@ export const loader: LoaderFunction = async ({
   const contact = getContact();
   const cta = getCallToAction();
   const { files } = allFiles;
-  return { contact, cta, events, files, hero, deviceType, menu };
+  const { faqs } = cta;
+  const htmlFaqs = faqs.map(({ question, answer }) => ({
+    question,
+    answer: converter.makeHtml(answer),
+  }));
+
+  return {
+    contact,
+    cta,
+    events,
+    faqs: htmlFaqs,
+    files,
+    hero,
+    deviceType,
+    menu,
+  };
 };
 
 export default function Index() {
-  const { contact, cta, events, files, hero, deviceType, menu } =
+  const { contact, cta, events, faqs, files, hero, deviceType, menu } =
     useLoaderData<typeof loader>();
   return (
     <>
@@ -81,7 +98,7 @@ export default function Index() {
         id="cta"
         className="py-12 bg-fixed bg-center bg-no-repeat bg-[url('/assets/image/background-red-grunge.jpg')]"
       >
-        <CallToAction {...cta} />
+        <CallToAction {...cta} faqs={faqs} />
       </section>
       <section
         id="contact"

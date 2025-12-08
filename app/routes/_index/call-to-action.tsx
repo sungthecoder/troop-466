@@ -40,9 +40,10 @@ export const CallToAction = ({
               <div className="collapse-title text-xl font-medium">
                 {question}
               </div>
-              <div className="collapse-content">
-                <p>{answer}</p>
-              </div>
+              <div
+                className="collapse-content"
+                dangerouslySetInnerHTML={{ __html: answer }}
+              />
             </div>
           ))}
         </div>
