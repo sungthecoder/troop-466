@@ -10,6 +10,10 @@ export const getMenu = () => {
       to: "/",
     },
     {
+      label: "Photo Albums",
+      to: "/photo-albums",
+    },
+    {
       label: "Eagle scout projects",
       to: "/eagle-projects",
     },
