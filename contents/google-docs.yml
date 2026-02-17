@@ -3,23 +3,29 @@ docs:
     category: resources/parents
     slug: how-to-make-payments
     id: 1mfEqNJ_pIw0d5sSrfXIUZ1NESuNZsUfTq0FmVrWTJes
+    memberOnly: true
   - title: How to Become a Registered Adult Leader
     category: resources/parents
     slug: trainings-for-adults
     id: 1yZiKwl6P7J0QjvG8l-HZmvRPY42lBCUeLUYBM2gxmWg
+    memberOnly: false
   - title: How to Become a Merit Badge Counselor
     category: resources/parents
     slug: how-to-become-a-merit-badge-counselor
     id: 1VjmGNBf1MJMniyRc9aRIZRN3PEhyrLrVX2rlkPlM8fE
+    memberOnly: false
   - title: How to Become a Assistant Scoutmaster
     category: resources/parents
     slug: how-to-become-a-asm
     id: 1u7_MAK4frkl1E7Es-a_eNJSqgYv2clICNlDQsR9v4hk
+    memberOnly: false
   - title: Overnight packing list
     category: resources/scouts
     slug: overnight-packing-list
     id: 1kTCaFk4Dbtfz-LzttKJdXXgqdXwzCJ5SYhM4Adm5Bz4
+    memberOnly: false
   - title: Personal Gear List for Summer Camp
     category: resources/scouts
     slug: personal-gear-for-summer-camp
     id: 1LJJK6n01sPVVWBFfrm1pjqs-DPvsAL6XOMDvMct4Tsg
+    memberOnly: false

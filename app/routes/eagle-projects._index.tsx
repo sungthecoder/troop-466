@@ -8,13 +8,11 @@ import { NavBar } from "~/component/nav-bar";
 import { FileCard } from "~/component/file-card";
 import { SHARED_DRIVE_ID, EAGLE_PROJECTS_FOLDER_ID } from "~/lib/constants";
 import { getAllFiles } from "~/lib/get-files-in-google-drive-folder";
-import { getMenu } from "~/lib/get-menu";
 import { drive_v3 } from "googleapis";
 
 export const loader: LoaderFunction = async ({
   request,
 }: LoaderFunctionArgs) => {
-  const menu = getMenu();
   const url = new URL(request.url);
   const pageToken = url.searchParams.get("pageToken");
 
@@ -28,15 +26,15 @@ export const loader: LoaderFunction = async ({
     .filter(({ kind }) => kind === "drive#file")
     .filter(({ name }) => name !== "README");
 
-  return { files, menu, nextPageToken };
+  return { files, nextPageToken };
 };
 
 export default function Page() {
-  const { menu, files } = useLoaderData<typeof loader>();
+  const { files } = useLoaderData<typeof loader>();
 
   return (
     <>
-      <NavBar menu={menu} />
+      <NavBar />
       <div id="top" className="page">
         <main>
           <section className="hero h-80 bg-[url('/assets/image/eagle.jpg')] text-slate-50">

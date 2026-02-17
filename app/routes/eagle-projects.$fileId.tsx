@@ -7,25 +7,23 @@ import { Footer } from "~/component/footer";
 import { NavBar } from "~/component/nav-bar";
 import { PageBody } from "~/component/page-body";
 import { getGoogleDocConttent } from "~/lib/get-google-doc-page";
-import { getMenu } from "~/lib/get-menu";
 
 export const loader: LoaderFunction = async ({
   params,
 }: LoaderFunctionArgs) => {
   const fileId = params.fileId || "";
   const page = await getGoogleDocConttent(fileId);
-  const menu = getMenu();
 
-  return { menu, page };
+  return { page };
 };
 
 export default function Page() {
-  const { menu, page } = useLoaderData<typeof loader>();
+  const { page } = useLoaderData<typeof loader>();
   const { title, date, html } = page;
 
   return (
     <>
-      <NavBar menu={menu} />
+      <NavBar />
       <div id="top" className="page">
         <main>
           <PageBody

@@ -1,4 +1,4 @@
-import type { LinksFunction } from "@remix-run/node";
+import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
 import {
   Links,
   Meta,
@@ -9,6 +9,8 @@ import {
 import { config as fontAwesomeConfig } from "@fortawesome/fontawesome-svg-core";
 import tailwindStyles from "~/tailwind.css?url";
 import rootStyles from "~/styles.scss?url";
+import { getCurrentUser } from "./lib/session.server";
+import { getMenu } from "./lib/get-menu";
 
 fontAwesomeConfig.autoAddCss = false;
 
@@ -16,6 +18,12 @@ export const links: LinksFunction = () => [
   { rel: "stylesheet", href: tailwindStyles },
   { rel: "stylesheet", href: rootStyles },
 ];
+
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  const user = await getCurrentUser(request);
+  const menu = getMenu(Boolean(user));
+  return { user, menu };
+};
 
 export default function App() {
   return (

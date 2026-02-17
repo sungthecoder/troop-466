@@ -45,9 +45,9 @@ const getMarkdownPages = async (): Promise<SitemapItem[]> => {
       markdownFiles.map(async (fileName) => {
         const slug = fileName.replace(/\.md$/, "");
         try {
-          const module = (await import(
-            `../../contents/pages/${slug}.md`
-          )) as { attributes?: { date?: string | null } };
+          const module = (await import(`../../contents/pages/${slug}.md`)) as {
+            attributes?: { date?: string | null };
+          };
           const lastmod =
             typeof module?.attributes?.date === "string"
               ? new Date(module.attributes.date).toISOString()
@@ -74,9 +74,11 @@ const getGoogleDocPages = (): SitemapItem[] => {
     return [];
   }
 
-  return googleDocs.docs.map(({ slug }) => ({
-    path: `/${slug}`,
-  }));
+  return googleDocs.docs
+    .filter(({ memberOnly }) => !memberOnly)
+    .map(({ slug }) => ({
+      path: `/${slug}`,
+    }));
 };
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
@@ -97,7 +99,11 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     }
   };
 
-  [...STATIC_PATHS.map((path) => ({ path })), ...markdownPages, ...googleDocPages]
+  [
+    ...STATIC_PATHS.map((path) => ({ path })),
+    ...markdownPages,
+    ...googleDocPages,
+  ]
     .sort((a, b) => a.path.localeCompare(b.path))
     .forEach(addItem);
 

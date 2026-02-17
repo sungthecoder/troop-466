@@ -37,6 +37,7 @@ interface GoogleDocMeta {
   title: string;
   slug: string;
   category?: string;
+  memberOnly?: boolean;
 }
 
 export const isValid = (
