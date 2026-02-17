@@ -1,9 +1,14 @@
+import { webcrypto } from "node:crypto";
 import { env } from "node:process";
 import { Authenticator } from "remix-auth";
 import { OAuth2Strategy } from "remix-auth-oauth2";
 import { type User } from "./auth.type";
 import { isMember } from "./check-google-doc-member.server";
 import { SITE_URL } from "./constants";
+
+if (!globalThis.crypto) {
+  globalThis.crypto = webcrypto as Crypto;
+}
 
 type GoogleUserInfo = {
   sub: string;
