@@ -18,7 +18,6 @@ import { getAllFiles } from "~/lib/get-files-in-google-drive-folder";
 import { getContact } from "~/lib/get-contact";
 import { getHero } from "~/lib/get-hero";
 import { getCallToAction } from "~/lib/get-call-to-action";
-import { getMenu } from "~/lib/get-menu";
 import MobileDetect from "mobile-detect";
 import { NavBar } from "~/component/nav-bar";
 
@@ -51,7 +50,6 @@ export const loader: LoaderFunction = async ({
     fetchCalendar(),
     getAllFiles(PHOTO_FOLDER_ID, SHARED_DRIVE_ID, { thumbnailSize: 400 }),
   ]);
-  const menu = getMenu();
   const hero = getHero();
   const events = upcomingEvents(allEvents);
   const userAgent = request.headers.get("user-agent");
@@ -73,16 +71,15 @@ export const loader: LoaderFunction = async ({
     files,
     hero,
     deviceType,
-    menu,
   };
 };
 
 export default function Index() {
-  const { contact, cta, events, faqs, files, hero, deviceType, menu } =
+  const { contact, cta, events, faqs, files, hero, deviceType } =
     useLoaderData<typeof loader>();
   return (
     <>
-      <NavBar menu={menu} />
+      <NavBar />
       <section>
         <Hero {...hero} />
       </section>

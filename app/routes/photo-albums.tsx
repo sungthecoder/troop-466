@@ -1,10 +1,13 @@
-import type { LoaderFunction } from "@netlify/remix-runtime";
-import { useLoaderData } from "@remix-run/react";
+import type {
+  LoaderFunction,
+  LoaderFunctionArgs,
+} from "@netlify/remix-runtime";
+import { redirect, useLoaderData } from "@remix-run/react";
 import { Footer } from "~/component/footer";
 import { NavBar } from "~/component/nav-bar";
-import { getMenu } from "~/lib/get-menu";
 import { getSheetAsJson } from "~/lib/get-google-sheet";
 import { PHOTO_ALBUM_SPREADSHEET_ID } from "~/lib/constants";
+import { canAccess } from "~/lib/session.server";
 
 interface Album {
   date: string;
@@ -13,15 +16,18 @@ interface Album {
   googleAlbumUrl: string;
 }
 
-export const loader: LoaderFunction = async () => {
-  const menu = getMenu();
+export const loader: LoaderFunction = async ({
+  request,
+}: LoaderFunctionArgs) => {
+  const access = await canAccess(request);
+
   const sheetRange = "Sheet1!A1:D";
   const albums = (await getSheetAsJson(
     PHOTO_ALBUM_SPREADSHEET_ID,
     sheetRange
   )) as unknown as Album[];
 
-  return { menu, albums };
+  return access ? { albums } : redirect("/403");
 };
 
 export default function Page() {
@@ -29,7 +35,7 @@ export default function Page() {
 
   return (
     <>
-      <NavBar menu={menu} />
+      <NavBar />
       <div id="top" className="page">
         <main>
           <section className="hero h-80 bg-[url('/assets/image/background-page-hero.jpg')] text-slate-50">

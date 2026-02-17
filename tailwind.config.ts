@@ -33,6 +33,7 @@ export default {
       {
         troop466: {
           primary: "#ff3b26",
+          "base-content": "#1f2937",
           ".btn-primary": {
             text: "white",
             fontFamily: "Roboto Slab, serif",
