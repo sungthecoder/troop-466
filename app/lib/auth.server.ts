@@ -1,11 +1,9 @@
-import dotenv from "dotenv";
+import { env } from "node:process";
 import { Authenticator } from "remix-auth";
 import { OAuth2Strategy } from "remix-auth-oauth2";
 import { type User } from "./auth.type";
 import { isMember } from "./check-google-doc-member.server";
 import { SITE_URL } from "./constants";
-
-dotenv.config();
 
 type GoogleUserInfo = {
   sub: string;
@@ -14,16 +12,13 @@ type GoogleUserInfo = {
   picture?: string;
 };
 
-const clientId =
-  process.env.GOOGLE_OAUTH_CLIENT_ID ?? process.env.GOOGLE_CLIENT_ID ?? "";
+const clientId = env.GOOGLE_OAUTH_CLIENT_ID ?? env.GOOGLE_CLIENT_ID ?? "";
 const clientSecret =
-  process.env.GOOGLE_OAUTH_CLIENT_SECRET ??
-  process.env.GOOGLE_CLIENT_SECRET ??
-  "";
+  env.GOOGLE_OAUTH_CLIENT_SECRET ?? env.GOOGLE_CLIENT_SECRET ?? "";
 const appUrl =
-  process.env.NODE_ENV === "development" ? "http://localhost:5173" : SITE_URL;
+  env.NODE_ENV === "development" ? "http://localhost:5173" : SITE_URL;
 const redirectURI =
-  process.env.GOOGLE_OAUTH_REDIRECT_URI ?? `${appUrl}/auth/google/callback`;
+  env.GOOGLE_OAUTH_REDIRECT_URI ?? `${appUrl}/auth/google/callback`;
 
 export const authenticator = new Authenticator<User>();
 
