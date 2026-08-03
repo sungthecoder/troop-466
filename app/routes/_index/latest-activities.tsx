@@ -1,16 +1,22 @@
-import { drive_v3 } from "googleapis";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
-// @ts-ignore
-const RMCarousel = Carousel.default ? Carousel.default : Carousel;
+const RMCarousel = (
+  Carousel as typeof Carousel & { default?: typeof Carousel }
+).default ?? Carousel;
 
 const deviceTypes = ["mobile", "tablet", "desktop"] as const;
 export type DeviceType = (typeof deviceTypes)[number];
 
 type LatestActivitiesProps = {
-  files: drive_v3.Schema$File[];
+  albums: {
+    date: string;
+    title: string;
+    googleAlbumUrl: string;
+    thumbnailUrl: string;
+  }[];
   deviceType: DeviceType;
+  isLoggedIn: boolean;
 };
 
 const responsive = {
@@ -33,8 +39,9 @@ const responsive = {
 };
 
 export const LatestActivities = ({
-  files,
+  albums,
   deviceType,
+  isLoggedIn,
 }: LatestActivitiesProps) => {
   return (
     <RMCarousel
@@ -48,23 +55,45 @@ export const LatestActivities = ({
       showDots
       removeArrowOnDeviceType={["tablet", "mobile"]}
     >
-      {files
-        .slice(0, 10)
-        .filter((file) => file.thumbnailLink)
-        .map((file) => (
-          <figure key={file.id} className="w-96 h-80 relative mx-auto ">
-            <img
-              className="absoute h-80 w-96 object-cover rounded-box shadow-xl"
-              src={file.thumbnailLink || ""}
-              alt={file.description || "photo of scout"}
-            />
-            {file.description ? (
-              <figcaption className="absolute inset-x-0 bottom-0 glass m-2 px-2 py-1 text-center rounded-md">
-                {file.description}
-              </figcaption>
-            ) : null}
+      {albums.map((album) => {
+        const year = new Date(album.date).toLocaleDateString("en-US", {
+          year: "numeric",
+        });
+        const thumbnail = (
+          <img
+            className="absolute h-80 w-96 rounded-box object-cover shadow-xl"
+            src={album.thumbnailUrl || "/assets/image/album-fallback.jpg"}
+            alt={`Thumbnail for ${album.title}`}
+            onError={(event) => {
+              event.currentTarget.onerror = null;
+              event.currentTarget.src = "/assets/image/album-fallback.jpg";
+            }}
+          />
+        );
+
+        return (
+          <figure
+            key={album.googleAlbumUrl}
+            className="relative mx-auto h-80 w-96"
+          >
+            {isLoggedIn ? (
+              <a
+                href={album.googleAlbumUrl}
+                target="_blank"
+                rel="noreferrer noopener"
+                aria-label={`View ${album.title} photo album`}
+              >
+                {thumbnail}
+              </a>
+            ) : (
+              thumbnail
+            )}
+            <figcaption className="absolute inset-x-0 bottom-0 m-2 rounded-md glass px-2 py-1 text-center">
+              {album.title} ({year})
+            </figcaption>
           </figure>
-        ))}
+        );
+      })}
     </RMCarousel>
   );
 };
