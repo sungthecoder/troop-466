@@ -14,6 +14,7 @@ interface Album {
   title: string;
   shortDescription: string;
   googleAlbumUrl: string;
+  thumbnailUrl: string;
 }
 
 export const loader: LoaderFunction = async ({
@@ -21,7 +22,7 @@ export const loader: LoaderFunction = async ({
 }: LoaderFunctionArgs) => {
   const access = await canAccess(request);
 
-  const sheetRange = "Sheet1!A1:D";
+  const sheetRange = "Sheet1!A1:E";
   const albums = (await getSheetAsJson(
     PHOTO_ALBUM_SPREADSHEET_ID,
     sheetRange
@@ -31,7 +32,7 @@ export const loader: LoaderFunction = async ({
 };
 
 export default function Page() {
-  const { menu, albums } = useLoaderData<typeof loader>();
+  const { albums } = useLoaderData<typeof loader>();
 
   return (
     <>
@@ -46,44 +47,79 @@ export default function Page() {
             </div>
           </section>
           <section className="bg-repeat bg-[url('/assets/image/topographic-map-background.jpg')] py-24">
-            <div className="mb-10 flex flex-row flex-wrap m-4"></div>
-            <div className="mx-auto max-w-4xl px-6 text-slate-900">
-              <div className="overflow-x-auto rounded bg-white/90">
-                <table className="w-full text-left text-sm">
-                  <thead className="border-b border-slate-200 bg-slate-100 text-slate-700">
-                    <tr>
-                      <th className="px-4 py-3 font-semibold">Date</th>
-                      <th className="px-4 py-3 font-semibold">Activity</th>
-                      <th className="px-4 py-3 font-semibold">
-                        Short Description
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {albums.map((album: Album) => (
-                      <tr
-                        key={`${album.googleAlbumUrl}`}
-                        className="border-b border-slate-200 last:border-0"
+            <div className="mx-auto flex max-w-7xl flex-row flex-wrap px-4">
+              {albums.map((album: Album) => {
+                const albumDate = new Date(album.date);
+                const month = albumDate.toLocaleDateString("en-US", {
+                  month: "short",
+                });
+                const year = albumDate.toLocaleDateString("en-US", {
+                  year: "numeric",
+                });
+
+                return (
+                  <div
+                    key={album.googleAlbumUrl}
+                    className="items-stretch w-full p-2 lg:w-1/2 xl:w-1/3"
+                  >
+                    <article className="card card-compact h-full w-auto bg-base-100 shadow-xl">
+                      <a
+                        href={album.googleAlbumUrl}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        aria-label={`View ${album.title} photo album`}
                       >
-                        <td className="px-4 py-3">
-                          {new Date(album.date).toLocaleDateString()}
-                        </td>
-                        <td className="px-4 py-3 font-medium">
-                          <a
-                            className="text-blue-700 underline"
-                            href={album.googleAlbumUrl}
-                            target="_blank"
-                            rel="noreferrer"
+                        <figure>
+                          <img
+                            className="h-52 min-w-full rounded-md object-cover"
+                            src={
+                              album.thumbnailUrl ||
+                              "/assets/image/album-fallback.jpg"
+                            }
+                            alt={`Thumbnail for ${album.title}`}
+                            onError={(event) => {
+                              event.currentTarget.onerror = null;
+                              event.currentTarget.src =
+                                "/assets/image/album-fallback.jpg";
+                            }}
+                          />
+                        </figure>
+                      </a>
+                      <div className="flex flex-grow flex-row">
+                        <div className="mx-4 flex w-16 min-w-16 max-w-16 flex-grow-0 flex-col justify-start p-4 text-center">
+                          <div className="text-sm font-bold uppercase text-troop466-400">
+                            {month}
+                          </div>
+                          <div className="mt-2 text-xl font-bold text-gray-900">
+                            {year}
+                          </div>
+                        </div>
+                        <div className="card-body grow">
+                          <h2
+                            className="card-title overflow-hidden text-ellipsis whitespace-normal line-clamp-1 break-all"
+                            title={album.title}
                           >
                             {album.title}
-                          </a>
-                        </td>
-                        <td className="px-4 py-3">{album.shortDescription}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                          </h2>
+                          <p className="line-clamp-3 break-all">
+                            {album.shortDescription}
+                          </p>
+                          <div className="card-actions justify-end">
+                            <a
+                              href={album.googleAlbumUrl}
+                              target="_blank"
+                              rel="noreferrer noopener"
+                              className="btn btn-primary text-white visited:text-white visited:hover:text-gray-900"
+                            >
+                              View Album
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </article>
+                  </div>
+                );
+              })}
             </div>
           </section>
         </main>
