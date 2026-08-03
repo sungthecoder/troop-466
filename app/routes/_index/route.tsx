@@ -11,15 +11,24 @@ import { Hero } from "./hero";
 import { UpcomingEvents } from "./upcoming-events";
 import { type DeviceType, LatestActivities } from "./latest-activities";
 import { Footer } from "~/component/footer";
-import { PHOTO_FOLDER_ID, SHARED_DRIVE_ID } from "~/lib/constants";
+import { PHOTO_ALBUM_SPREADSHEET_ID } from "~/lib/constants";
 import { upcomingEvents } from "~/lib/upcoming-events";
 import { fetchCalendar } from "~/lib/fetch-calendar";
-import { getAllFiles } from "~/lib/get-files-in-google-drive-folder";
 import { getContact } from "~/lib/get-contact";
 import { getHero } from "~/lib/get-hero";
 import { getCallToAction } from "~/lib/get-call-to-action";
 import MobileDetect from "mobile-detect";
 import { NavBar } from "~/component/nav-bar";
+import { getSheetAsJson } from "~/lib/get-google-sheet";
+import { getCurrentUser } from "~/lib/session.server";
+
+interface Album {
+  date: string;
+  title: string;
+  shortDescription: string;
+  googleAlbumUrl: string;
+  thumbnailUrl: string;
+}
 
 export const meta: MetaFunction = () => {
   return [
@@ -46,9 +55,10 @@ export const loader: LoaderFunction = async ({
   request,
 }: LoaderFunctionArgs) => {
   const converter = new showdown.Converter();
-  const [allEvents, allFiles] = await Promise.all([
+  const [allEvents, albums, currentUser] = await Promise.all([
     fetchCalendar(),
-    getAllFiles(PHOTO_FOLDER_ID, SHARED_DRIVE_ID, { thumbnailSize: 400 }),
+    getSheetAsJson(PHOTO_ALBUM_SPREADSHEET_ID, "Sheet1!A1:E"),
+    getCurrentUser(request),
   ]);
   const hero = getHero();
   const events = upcomingEvents(allEvents);
@@ -56,7 +66,6 @@ export const loader: LoaderFunction = async ({
   const deviceType = guessDeviceType(userAgent);
   const contact = getContact();
   const cta = getCallToAction();
-  const { files } = allFiles;
   const { faqs } = cta;
   const htmlFaqs = faqs.map(({ question, answer }) => ({
     question,
@@ -68,14 +77,17 @@ export const loader: LoaderFunction = async ({
     cta,
     events,
     faqs: htmlFaqs,
-    files,
+    albums: (albums as unknown as Album[])
+      .filter((album) => album.thumbnailUrl)
+      .slice(0, 10),
     hero,
     deviceType,
+    isLoggedIn: Boolean(currentUser),
   };
 };
 
 export default function Index() {
-  const { contact, cta, events, faqs, files, hero, deviceType } =
+  const { contact, cta, events, faqs, albums, hero, deviceType, isLoggedIn } =
     useLoaderData<typeof loader>();
   return (
     <>
@@ -84,7 +96,11 @@ export default function Index() {
         <Hero {...hero} />
       </section>
       <section>
-        <LatestActivities files={files} deviceType={deviceType} />
+        <LatestActivities
+          albums={albums}
+          deviceType={deviceType}
+          isLoggedIn={isLoggedIn}
+        />
       </section>
       <section className="py-12 bg-fixed bg-center bg-no-repeat bg-[url('/assets/image/topographic-map-background.jpg')]">
         <div className="mt-48">
